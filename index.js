@@ -21,6 +21,9 @@ const runTimer = () => {
       timer--;
       document.querySelector("#timer-val").textContent = timer;
     } else {
+      document.getElementById(
+        "circle-container"
+      ).innerHTML = `<h1 class="font-black text-4xl text-sky-600 uppercase">Game Over</h1>`;
       clearInterval(timerid);
     }
   }, 1000);
