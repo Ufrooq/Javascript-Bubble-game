@@ -1,19 +1,12 @@
-let timer = 60;
-let newValue;
+let timer = 10;
+let valueToHit;
+let score = 0;
 
-function addEventListenerToCircles() {
-  let circleBtns = document.querySelectorAll("#cirkle");
-  circleBtns.forEach((circleBtn) => {
-    circleBtn.addEventListener("click", () => {
-      console.log(newValue);
-    });
-  });
-}
 const makeBubble = () => {
   let circles = "";
   for (let i = 0; i <= 120; i++) {
     circles += `<div id="cirkle" class="bg-sky-600 w-11 h-11 rounded-full relative hover:bg-sky-700 cursor-pointer">
-                    <p class="text-white font-semibold mt-[10px] text-center  ">
+                    <p id="cirkle-value" class="text-white font-semibold mt-[10px] text-center">
                     ${Math.floor(Math.random() * 9)}
                     </p>
                 </div>`;
@@ -34,10 +27,30 @@ const runTimer = () => {
 };
 
 const newValueToGuess = () => {
-  newValue = Math.floor(Math.random() * 9);
-  document.querySelector("#hits-val").textContent = newValue;
+  valueToHit = Math.floor(Math.random() * 9);
+  document.querySelector("#hits-val").textContent = valueToHit;
 };
 
+const setScore = () => {
+  score++;
+  document.getElementById("total-score").textContent = score;
+};
+
+function addEventListenerToCircles() {
+  let circleBtns = document.querySelectorAll("#cirkle");
+  circleBtns.forEach((circleBtn) => {
+    circleBtn.addEventListener("click", () => {
+      const p_value = circleBtn.querySelector("p").innerText;
+      if (p_value == valueToHit) {
+        setScore();
+        makeBubble();
+        newValueToGuess();
+        runTimer();
+      }
+    });
+  });
+}
+
+makeBubble();
 newValueToGuess();
 runTimer();
-makeBubble();
